@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default function ConferencesPage() {
+  console.log("test page")
   return (
     <div className="min-h-screen bg-white p-4">
       <div className="w-full max-w-6xl mx-auto">
