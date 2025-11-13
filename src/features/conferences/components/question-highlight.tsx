@@ -45,7 +45,7 @@ export default function QuestionHighlight({
         <div className="fixed inset-0 z-50 flex items-center justify-center">
             {/* Backdrop */}
             <div 
-                className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+                className="fixed inset-0 bg-black/20 transition-opacity"
                 onClick={onClose}
             />
             
@@ -66,7 +66,9 @@ export default function QuestionHighlight({
                     <div className="mb-6">
                         <div className="flex items-center gap-3 text-gray-600 mb-4">
                             <User className="w-6 h-6" />
-                            <span className="font-medium text-lg">{question.name}</span>
+                            <span className="font-medium text-lg">{
+                                question.hideName ? "Abdullah" : question.name
+                                }</span>
                             <span className="text-gray-400">•</span>
                             <span className="text-gray-500">{formatDate(question.createdAt)}</span>
                         </div>

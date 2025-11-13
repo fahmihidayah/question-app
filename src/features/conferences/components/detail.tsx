@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import QuestionItem from "./question-item";
 import QuestionHighlight from "./question-highlight";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 interface ConferenceDetailProps {
     conference?: Conference;
@@ -71,16 +73,6 @@ export default function ConferenceDetail({ conference, questions }: ConferenceDe
     return (
         <div className="min-h-screen bg-gray-50 py-8 w-full">
             <div className="mx-auto px-10 w-full">
-                {/* Header with back button */}
-                <div className="mb-8">
-                    <button
-                        onClick={() => router.back()}
-                        className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors duration-200"
-                    >
-                        <ArrowLeft className="w-4 h-4" />
-                        <span>Kembali ke Konferensi</span>
-                    </button>
-                </div>
 
                 {/* Conference Details Card */}
                 <div className="text-center mb-6">
@@ -101,11 +93,16 @@ export default function ConferenceDetail({ conference, questions }: ConferenceDe
 
                 {/* Questions Section */}
                 <div className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
-                    <div className="bg-gray-50 px-6 py-4 border-b border-gray-200">
+                    <div className="bg-gray-50 px-6 py-4 border-b border-gray-200 flex flex-row justify-between">
                         <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
                             <MessageCircle className="w-5 h-5" />
                             Pertanyaan ({questions?.length})
                         </h2>
+                        <Link href={`/conferences/${conference?.slug}/questions`}>
+                            <Button>
+                                Tanya
+                            </Button>
+                        </Link>
                     </div>
 
                     <div className="p-6">

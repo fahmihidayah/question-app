@@ -6,7 +6,7 @@ import { useState } from "react";
 
 import { signInFormSchema, SignInFormSchema } from "../types";
 import { signInAction } from "../actions";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -17,6 +17,7 @@ import Link from "next/link";
 
 export const SignInForm: React.FC = () => {
     const { oauth } = adminAuthClient.signin()
+    const searchParams = useSearchParams();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isGoogleLoading, setIsGoogleLoading] = useState(false);
     const [submitError, setSubmitError] = useState<string | null>(null);
@@ -39,7 +40,14 @@ export const SignInForm: React.FC = () => {
         setSubmitError(null);
         try {
             await signInAction(data)
-            router.push("/")
+            const redirect = searchParams.get("redirect")
+            if(redirect) {
+                router.push(redirect)
+            }
+            else {
+                 router.push("/")
+            }
+           
             reset();
         } catch (error) {
             console.error("Masuk gagal:", error);

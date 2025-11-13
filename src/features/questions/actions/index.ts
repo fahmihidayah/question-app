@@ -91,6 +91,7 @@ export const createQuestionAction = async (questionData: QuestionFormSchema) => 
             data: {
                 conference: conference.id,
                 name: questionData.name,
+                hideName : questionData.hideName,
                 question: questionData.question,
                 user: user.user
             }

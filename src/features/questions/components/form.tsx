@@ -9,13 +9,16 @@ import { createQuestionAction } from "../actions";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { User } from "@/payload-types";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface QuestionFormProps {
+    user : User;
     conferenceSlug: string;
     conferenceName?: string;
 }
 
-const QuestionForm: React.FC<QuestionFormProps> = ({ conferenceSlug, conferenceName }) => {
+const QuestionForm: React.FC<QuestionFormProps> = ({ user, conferenceSlug, conferenceName }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -24,7 +27,8 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ conferenceSlug, conferenceN
     const form = useForm<QuestionFormSchema>({
         resolver: zodResolver(questionFormSchema),
         defaultValues: {
-            name: "",
+            name: user.name ?? "",
+            hideName : false,
             question: "",
             conference: conferenceSlug
         }
@@ -112,6 +116,31 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ conferenceSlug, conferenceN
                                                 {...field}
                                             />
                                         </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
+                            <FormField
+                                control={form.control}
+                                name='hideName'
+                                render={({ field }) => (
+                                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                                        <FormControl>
+                                            <Checkbox
+                                                checked={field.value}
+                                                onCheckedChange={field.onChange}
+                                                disabled={isSubmitting}
+                                            />
+                                        </FormControl>
+                                        <div className="space-y-1 leading-none">
+                                            <FormLabel>
+                                                Sembunyikan Nama Saya
+                                            </FormLabel>
+                                            <p className="text-sm text-muted-foreground">
+                                                Jika dicentang, nama Anda tidak akan ditampilkan saat pertanyaan ditayangkan
+                                            </p>
+                                        </div>
                                         <FormMessage />
                                     </FormItem>
                                 )}

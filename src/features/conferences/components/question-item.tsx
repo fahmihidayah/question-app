@@ -31,10 +31,12 @@ export default function QuestionItem({
                     <div className={`flex items-center justify-between text-x text-blue-800 mb-2`}>
                         <div className="flex items-center gap-2">
                             <User className="w-6 h-6" />
-                            <span className="font-medium">{question.name}</span>
+                            <span className="font-medium">{
+                                question.hideName ? "Abdullah" : question.name
+                                }</span>
                             <span>{formatDate(question.createdAt)}</span>
                         </div>
-                        <button
+                        {/* <button
                             onClick={(e) => {
                                 e.stopPropagation(); // Prevent triggering the parent onClick
                                 handleDeleteQuestion(question.id);
@@ -55,7 +57,7 @@ export default function QuestionItem({
                             ) : (
                                 <Trash2 className="w-4 h-4 pointer-events-none" />
                             )}
-                        </button>
+                        </button> */}
                     </div>
                     <p className="text-lg leading-relaxed whitespace-pre-wrap text-blue-800">
                         {question.question}
