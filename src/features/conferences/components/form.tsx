@@ -33,7 +33,7 @@ export const ConferenceForm: React.FC = () => {
         setSubmitError(null);
         try {
             await createConferenceAction(data);
-            router.push("/conferences");
+           window.location.href = "/dashboard/conferences"
             reset();
         } catch (error) {
             console.error("Pembuatan konferensi gagal:", error);
@@ -46,11 +46,7 @@ export const ConferenceForm: React.FC = () => {
     return (
         <div className="min-h-screen bg-white p-4">
             <div className="w-full">
-                {/* Header */}
-                <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">Buat Konferensi</h1>
-                    <p className="text-gray-600">Tambahkan konferensi baru</p>
-                </div>
+            
 
                 {/* Error Message */}
                 {submitError && (

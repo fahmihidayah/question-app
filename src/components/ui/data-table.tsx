@@ -40,9 +40,16 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
   searchKey?: string
-  searchPlaceholder?: string,
-  isLoading : boolean,
-  error?: string,
+  searchPlaceholder?: string
+  isLoading: boolean
+  error?: string
+  onChange?: (value: string) => void
+  value?: string
+  page?: number
+  totalPages?: number
+  hasNextPage?: boolean
+  hasPrevPage?: boolean
+  onPageChange?: (page: number) => void
 }
 
 export function DataTable<TData, TValue>({
@@ -52,6 +59,13 @@ export function DataTable<TData, TValue>({
   searchPlaceholder = "Search...",
   isLoading = false,
   error,
+  onChange,
+  value,
+  page,
+  totalPages,
+  hasNextPage,
+  hasPrevPage,
+  onPageChange,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -88,9 +102,16 @@ export function DataTable<TData, TValue>({
             <Search className="absolute left-2 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               placeholder={searchPlaceholder}
-              value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ""}
-              onChange={(event) =>
-                table.getColumn(searchKey)?.setFilterValue(event.target.value)
+              value={value ?? (table.getColumn(searchKey)?.getFilterValue() as string)}
+              onChange={(event) => {
+                if (onChange) {
+                  onChange(event.target.value)
+                }
+                else {
+                  table.getColumn(searchKey)?.setFilterValue(event.target.value)
+                }
+              }
+
               }
               className="pl-8"
               disabled={isLoading || !!error}
@@ -135,9 +156,9 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   )
                 })}
@@ -201,7 +222,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-end space-x-2 py-4">
+      <div className="flex items-center justify-between space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
           {!isLoading && !error && (
             <>
@@ -210,23 +231,51 @@ export function DataTable<TData, TValue>({
             </>
           )}
         </div>
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage() || isLoading || !!error}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage() || isLoading || !!error}
-          >
-            Next
-          </Button>
+        <div className="flex items-center space-x-2">
+          {/* Server-side pagination */}
+          {onPageChange && page && totalPages ? (
+            <>
+              <div className="text-sm text-muted-foreground">
+                Page {page} of {totalPages}
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => onPageChange(page - 1)}
+                disabled={!hasPrevPage || isLoading || !!error}
+              >
+                Previous
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => onPageChange(page + 1)}
+                disabled={!hasNextPage || isLoading || !!error}
+              >
+                Next
+              </Button>
+            </>
+          ) : (
+            /* Client-side pagination */
+            <>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => table.previousPage()}
+                disabled={!table.getCanPreviousPage() || isLoading || !!error}
+              >
+                Previous
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => table.nextPage()}
+                disabled={!table.getCanNextPage() || isLoading || !!error}
+              >
+                Next
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -234,12 +283,12 @@ export function DataTable<TData, TValue>({
 }
 
 // Helper function to create sortable header
-export function SortableHeader<T>({ 
-  column, 
-  children 
-}: { 
-  column: any; 
-  children: React.ReactNode 
+export function SortableHeader<T>({
+  column,
+  children
+}: {
+  column: any;
+  children: React.ReactNode
 }) {
   return (
     <Button
@@ -254,9 +303,9 @@ export function SortableHeader<T>({
 }
 
 // Helper function to create action menu
-export function ActionMenu({ 
+export function ActionMenu({
   children,
-  ...props 
+  ...props
 }: React.ComponentProps<typeof DropdownMenu>) {
   return (
     <DropdownMenu {...props}>

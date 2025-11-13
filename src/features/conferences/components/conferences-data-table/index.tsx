@@ -4,26 +4,32 @@ import { DataTable } from "@/components/ui/data-table"
 import { useQuery } from "@tanstack/react-query"
 import { getConferences } from "../../actions"
 import { columns } from "./columns"
+import { useState } from "react"
+import { useDebounce } from "@/hooks/use-debounce"
 
 export function ConferencesDataTable() {
-  const { 
-    data: conferencesData, 
-    isLoading, 
-    error 
+  const [keyword, setKeyword] = useState('')
+  const [page, setPage] = useState(1)
+  const debouncedKeyword = useDebounce(keyword, 300)
+
+  const {
+    data: conferencesData,
+    isLoading,
+    error
   } = useQuery({
-    queryKey: ['conferences'],
-    queryFn: getConferences,
+    queryKey: ['conferences', debouncedKeyword, page],
+    queryFn: async () => {
+      return await getConferences({
+        keyword: debouncedKeyword,
+        page
+      })
+    },
   })
 
-  // if (isLoading) {
-  //   return <div>Loading conferences...</div>
-  // }
-
-  // if (error) {
-  //   return <div>Error loading conferences: {error.message}</div>
-  // }
-
   const conferences = conferencesData?.docs || []
+  const totalPages = conferencesData?.totalPages || 1
+  const hasNextPage = conferencesData?.hasNextPage || false
+  const hasPrevPage = conferencesData?.hasPrevPage || false
 
   return (
     <DataTable
@@ -33,6 +39,16 @@ export function ConferencesDataTable() {
       searchPlaceholder="Search conferences..."
       isLoading={isLoading}
       error={error?.message}
+      onChange={(value) => {
+        setKeyword(value)
+        setPage(1) // Reset to first page when searching
+      }}
+      value={keyword}
+      page={page}
+      totalPages={totalPages}
+      hasNextPage={hasNextPage}
+      hasPrevPage={hasPrevPage}
+      onPageChange={(newPage) => setPage(newPage)}
     />
   )
 }

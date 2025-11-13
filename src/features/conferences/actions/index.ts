@@ -4,6 +4,8 @@ import { getPayload } from "payload";
 import { QuestionFormSchema, ConferenceFormSchema } from "../type";
 import config from "@payload-config";
 import { getMeUser } from "@/utilities/getMeUser";
+import { QueryAction } from "@/types/query-action";
+import { revalidateTag } from "next/cache";
 
 export const findByIdConferences = async (slug: string) => {
     const payload = await getPayload({ config });
@@ -63,17 +65,47 @@ export const findAllConferences = async () => {
     });
 }
 
-export const getConferences = async () => {
+export const getConferences = async (queryAction: QueryAction) => {
     const payload = await getPayload({ config });
     const user = await getMeUser();
-    return payload.find({
-        collection: "conferences",
-        where: {
+
+    const limit = 10;
+    const page = queryAction.page || 1;
+
+    // Build the where clause
+    const whereConditions: any[] = [
+        {
             user: {
                 equals: user.user.id
             }
+        }
+    ];
+
+    // Add keyword search if provided
+    if (queryAction.keyword && queryAction.keyword.trim() !== '') {
+        whereConditions.push({
+            or: [
+                {
+                    title: {
+                        contains: queryAction.keyword
+                    }
+                },
+                {
+                    description: {
+                        contains: queryAction.keyword
+                    }
+                }
+            ]
+        });
+    }
+
+    return payload.find({
+        collection: "conferences",
+        where: {
+            and: whereConditions
         },
-        limit: 1000,
+        limit,
+        page,
         sort: '-createdAt'
     });
 }
@@ -155,6 +187,8 @@ export const createConferenceAction = async (conferenceForm: ConferenceFormSchem
                 user: user.user
             }
         });
+
+        revalidateTag("/dashboard/conferences")
 
         return conference;
     }
