@@ -183,17 +183,6 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ user, conferenceSlug, confe
                             >
                                 {isSubmitting ? "Mengirim Pertanyaan..." : "Kirim Pertanyaan"}
                             </Button>
-
-                            {/* Cancel Button */}
-                            <Button
-                                type="button"
-                                onClick={() => router.back()}
-                                variant="ghost"
-                                size="default"
-                                className="w-full"
-                            >
-                                Batal
-                            </Button>
                         </form>
                     </Form>
                 </div>
