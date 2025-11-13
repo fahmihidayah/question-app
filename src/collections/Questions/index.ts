@@ -26,6 +26,16 @@ const Questions: CollectionConfig = {
       required: true,
     },
     {
+      name : 'hideName',
+      type : "checkbox",
+      defaultValue : false,
+    },
+    {
+      name : "accept",
+      type : "checkbox",
+      defaultValue : false,
+    },
+    {
       name: 'conference',
       type: 'relationship',
       relationTo: 'conferences',

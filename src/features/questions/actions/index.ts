@@ -14,9 +14,18 @@ export const getListQuestionByConferenceId = async (id?: number) => {
     const questions = await payload.find({
         collection: "questions",
         where: {
-            conference: {
-                equals: id
-            }
+            and: [
+                {
+                    conference: {
+                        equals: id
+                    }
+                },
+                {
+                    accept : {
+                        equals: true
+                    }
+                }
+            ]
         }
     })
 
@@ -83,7 +92,7 @@ export const createQuestionAction = async (questionData: QuestionFormSchema) => 
                 conference: conference.id,
                 name: questionData.name,
                 question: questionData.question,
-                user : user.user
+                user: user.user
             }
         });
 

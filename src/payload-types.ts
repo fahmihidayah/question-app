@@ -239,6 +239,8 @@ export interface Question {
   id: number;
   name: string;
   question: string;
+  hideName?: boolean | null;
+  accept?: boolean | null;
   conference: number | Conference;
   user: number | User;
   updatedAt: string;
@@ -485,6 +487,8 @@ export interface MediaSelect<T extends boolean = true> {
 export interface QuestionsSelect<T extends boolean = true> {
   name?: T;
   question?: T;
+  hideName?: T;
+  accept?: T;
   conference?: T;
   user?: T;
   updatedAt?: T;
