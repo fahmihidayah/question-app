@@ -33,7 +33,7 @@ export const ConferenceForm: React.FC = () => {
         setSubmitError(null);
         try {
             await createConferenceAction(data);
-           window.location.href = "/dashboard/conferences"
+            window.location.href = "/dashboard/conferences"
             reset();
         } catch (error) {
             console.error("Pembuatan konferensi gagal:", error);
