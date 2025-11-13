@@ -5,6 +5,7 @@ import { CollectionConfig } from "payload";
 
 const Conferences: CollectionConfig = {
   slug: 'conferences',
+  trash : true,
   admin: {
     useAsTitle: 'title',
     group: 'Conferences',

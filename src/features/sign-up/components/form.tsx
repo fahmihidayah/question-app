@@ -46,7 +46,7 @@ export const SignUpForm: React.FC = () => {
                 
                 // Redirect to conferences after successful signup
                 setTimeout(() => {
-                    router.push("/conferences");
+                    router.push("/dashboard");
                     router.refresh(); // Refresh to update auth state
                 }, 2000);
             } else {
@@ -187,7 +187,7 @@ export const SignUpForm: React.FC = () => {
                         <p className="text-sm text-blue-600">
                             Sudah punya akun?{' '}
                             <Link 
-                                href="/auth" 
+                                href="/sign-in" 
                                 className="font-semibold text-blue-700 hover:text-blue-900 hover:underline transition-colors duration-200"
                             >
                                 Masuk di sini

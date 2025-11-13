@@ -51,7 +51,6 @@ export const signUpAction = async (signUpForm: SignUpFormSchema) => {
         const cookiesNext = await cookies();
         cookiesNext.set("payload-token", loginResult.token)
     }
-    revalidateTag("/")
     return {
       success: true,
       user: newUser,

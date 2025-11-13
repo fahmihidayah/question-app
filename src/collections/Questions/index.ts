@@ -2,6 +2,7 @@ import { CollectionConfig } from "payload";
 
 const Questions: CollectionConfig = {
   slug: 'questions',
+  trash : true,
   admin: {
     useAsTitle: 'question',
     group: 'Conferences',
@@ -30,6 +31,13 @@ const Questions: CollectionConfig = {
       relationTo: 'conferences',
       required: true,
     },
+    {
+      name : "user",
+      type : "relationship",
+      relationTo : "users",
+      required : true,
+      hasMany : false
+    }
   ],
 };
 

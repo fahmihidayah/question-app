@@ -5,6 +5,16 @@ import { MessageCircle, User, LogOut, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { logoutAction } from '@/features/sign-in/actions/logout';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 interface NavbarProps {
   isAuthenticated?: boolean;
@@ -15,24 +25,28 @@ const Navbar = ({ isAuthenticated = false, userName }: NavbarProps) => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [showLogoutDialog, setShowLogoutDialog] = useState(false);
   const router = useRouter();
 
-  const handleLogout = async () => {
-    const confirmed = window.confirm('Apakah Anda yakin ingin keluar dari akun?');
-    
-    if (confirmed && !isLoggingOut) {
+  const handleLogoutClick = () => {
+    setIsProfileMenuOpen(false)
+    setShowLogoutDialog(true);
+  };
+
+  const handleLogoutConfirm = async () => {
+    if (!isLoggingOut) {
       setIsLoggingOut(true);
-      
+      setShowLogoutDialog(false);
+
       try {
         const result = await logoutAction();
-        
+
         if (result.success) {
           // Close the profile menu
           setIsProfileMenuOpen(false);
-          
+
           // Redirect to home page
-          router.push('/');
-          router.refresh();
+          window.location.href = '/';
         } else {
           console.error('Logout gagal:', result.error);
           alert('Gagal logout: ' + (result.error || 'Kesalahan tidak diketahui'));
@@ -77,21 +91,7 @@ const Navbar = ({ isAuthenticated = false, userName }: NavbarProps) => {
           <div className="hidden md:flex items-center space-x-4">
             {isAuthenticated ? (
               <>
-                {/* Authenticated User Menu */}
-                <Link
-                  href="/conferences"
-                  className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md font-medium transition-colors duration-200"
-                >
-                  Konferensi
-                </Link>
                 
-                <Link
-                  href="/auto-conferences"
-                  className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md font-medium transition-colors duration-200"
-                >
-                  Auto Create Konferensi
-                </Link>
-
                 {/* User Profile Dropdown */}
                 <div className="relative">
                   <button
@@ -104,14 +104,14 @@ const Navbar = ({ isAuthenticated = false, userName }: NavbarProps) => {
 
                   {/* Dropdown Menu */}
                   {isProfileMenuOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-50">
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-50 ">
                       <div className="px-4 py-2 text-sm text-gray-900 border-b border-gray-100">
                         <div className="font-medium">{userName || 'Pengguna'}</div>
                         <div className="text-gray-500">Pengelola Konferensi</div>
                       </div>
                       
                       <Link
-                        href="/conferences"
+                        href="/dashboard/conferences"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200"
                         onClick={() => setIsProfileMenuOpen(false)}
                       >
@@ -119,7 +119,7 @@ const Navbar = ({ isAuthenticated = false, userName }: NavbarProps) => {
                       </Link>
                       
                       <Link
-                        href="/auto-conferences"
+                        href="/dashboard/auto-conferences"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200"
                         onClick={() => setIsProfileMenuOpen(false)}
                       >
@@ -135,7 +135,7 @@ const Navbar = ({ isAuthenticated = false, userName }: NavbarProps) => {
                       </Link>
                       
                       <button
-                        onClick={handleLogout}
+                        onClick={handleLogoutClick}
                         disabled={isLoggingOut}
                         className="flex items-center w-full px-4 py-2 text-sm text-red-700 hover:bg-red-50 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
@@ -158,30 +158,21 @@ const Navbar = ({ isAuthenticated = false, userName }: NavbarProps) => {
             ) : (
               <>
                 {/* Guest Navigation */}
-                <Link
-                  href="/conferences"
-                  className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md font-medium transition-colors duration-200"
-                >
-                  Jelajahi Konferensi
-                </Link>
+               
                 
-                <button
-                  onClick={() => {
-                    router.push("/auth")
-                  }}
+                <Link
+                 href={"/sign-in"}
                   className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md font-medium transition-colors duration-200"
                 >
                   Masuk
-                </button>
+                </Link>
                 
-                <button
-                onClick={() => {
-                  router.push("/sign-up")
-                }}
+                <Link
+                 href={"/sign-up"}
                   className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-105"
                 >
                   Daftar Gratis
-                </button>
+                </Link>
               </>
             )}
           </div>
@@ -227,7 +218,7 @@ const Navbar = ({ isAuthenticated = false, userName }: NavbarProps) => {
                 <button
                   onClick={() => {
                     setIsMobileMenuOpen(false);
-                    handleLogout();
+                    handleLogoutClick();
                   }}
                   onTouchStart={() => {}}
                   disabled={isLoggingOut}
@@ -290,8 +281,8 @@ const Navbar = ({ isAuthenticated = false, userName }: NavbarProps) => {
 
       {/* Mobile Menu Overlay */}
       {(isProfileMenuOpen || isMobileMenuOpen) && (
-        <div 
-          className="fixed inset-0 z-40 bg-black bg-opacity-20"
+        <div
+          className="fixed inset-0 z-40"
           onClick={() => {
             setIsProfileMenuOpen(false);
             setIsMobileMenuOpen(false);
@@ -300,6 +291,27 @@ const Navbar = ({ isAuthenticated = false, userName }: NavbarProps) => {
           style={{ WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation' }}
         />
       )}
+
+      {/* Logout Confirmation Dialog */}
+      <AlertDialog open={showLogoutDialog} onOpenChange={setShowLogoutDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Konfirmasi Keluar</AlertDialogTitle>
+            <AlertDialogDescription>
+              Apakah Anda yakin ingin keluar dari akun?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Batal</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleLogoutConfirm}
+              className="bg-red-600 hover:bg-red-700 focus:ring-red-600"
+            >
+              Keluar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </nav>
   );
 };

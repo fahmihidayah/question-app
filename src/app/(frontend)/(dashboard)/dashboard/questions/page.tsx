@@ -7,9 +7,7 @@ export default function QuestionsPage() {
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-3xl font-bold tracking-tight">Questions</h1>
       </div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <QuestionsDataTable />
-      </Suspense>
+       <QuestionsDataTable />
     </div>
   )
 }

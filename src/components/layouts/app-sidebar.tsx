@@ -42,34 +42,34 @@ const data = {
     },
     {
       title: "Konferensi",
-      url: "/conferences",
+      url: "/dashboard/conferences",
       icon: Calendar,
     },
     {
       title: "Auto Konferensi",
-      url: "/auto-conferences",
+      url: "/dashboard/auto-conferences",
       icon: Zap,
     },
     {
       title: "Pertanyaan",
-      url: "/questions",
+      url: "/dashboard/questions",
       icon: MessageSquare,
     },
     {
       title: "Wadah Bertanya",
-      url: "/ask",
+      url: "/dashboard/ask",
       icon: HelpCircle,
     },
   ],
   navSecondary: [
     {
       title: "Pengguna dan Izin",
-      url: "/users",
+      url: "/dashboard/users",
       icon: Users,
     },
     {
       title: "Pengaturan",
-      url: "/settings",
+      url: "/dashboard/settings",
       icon: Settings,
     },
   ],

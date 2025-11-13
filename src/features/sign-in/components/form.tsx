@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
 import { adminAuthClient } from '@/utilities/auth';
+import Link from "next/link";
 
 
 export const SignInForm: React.FC = () => {
@@ -38,7 +39,7 @@ export const SignInForm: React.FC = () => {
         setSubmitError(null);
         try {
             await signInAction(data)
-            router.push("/conferences")
+            router.push("/")
             reset();
         } catch (error) {
             console.error("Masuk gagal:", error);
@@ -185,13 +186,12 @@ export const SignInForm: React.FC = () => {
                     <div className="mt-8 text-center">
                         <p className="text-sm text-blue-600">
                             Belum punya akun?{' '}
-                            <Button
-                                variant="link"
-                                size="sm"
+                            <Link
+                                href={"/sign-up"}
                                 className="font-semibold"
                             >
                                 Daftar di sini
-                            </Button>
+                            </Link>
                         </p>
                     </div>
                 </div>

@@ -7,9 +7,7 @@ export default function ConferencesPage() {
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-3xl font-bold tracking-tight">Conferences</h1>
       </div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <ConferencesDataTable />
-      </Suspense>
+     <ConferencesDataTable />
     </div>
   )
 }

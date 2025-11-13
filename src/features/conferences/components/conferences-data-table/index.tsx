@@ -15,13 +15,13 @@ export function ConferencesDataTable() {
     queryFn: getConferences,
   })
 
-  if (isLoading) {
-    return <div>Loading conferences...</div>
-  }
+  // if (isLoading) {
+  //   return <div>Loading conferences...</div>
+  // }
 
-  if (error) {
-    return <div>Error loading conferences: {error.message}</div>
-  }
+  // if (error) {
+  //   return <div>Error loading conferences: {error.message}</div>
+  // }
 
   const conferences = conferencesData?.docs || []
 
@@ -31,6 +31,8 @@ export function ConferencesDataTable() {
       data={conferences}
       searchKey="title"
       searchPlaceholder="Search conferences..."
+      isLoading={isLoading}
+      error={error?.message}
     />
   )
 }
