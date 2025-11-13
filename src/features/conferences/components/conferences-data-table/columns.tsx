@@ -6,7 +6,8 @@ import { SortableHeader } from "@/components/ui/data-table"
 import Link from "next/link"
 import { ConferenceActions } from "./conference-actions"
 
-export const columns: ColumnDef<Conference>[] = [
+export const columns = () : ColumnDef<Conference>[] => {
+  return [
   {
     accessorKey: "title",
     header: ({ column }) => (
@@ -70,7 +71,8 @@ export const columns: ColumnDef<Conference>[] = [
     id: "actions",
     cell: ({ row }) => {
       const conference = row.original
-      return <ConferenceActions conference={conference} />
+      return <ConferenceActions conference={conference}/>
     },
   },
 ]
+}

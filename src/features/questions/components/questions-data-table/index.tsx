@@ -7,7 +7,7 @@ import { columns } from "./columns"
 import { useState } from "react"
 import { useDebounce } from "@/hooks/use-debounce"
 
-export function QuestionsDataTable({conferenceId} : {conferenceId? : string}) {
+export function QuestionsDataTable({conferenceId, isTableQuestion} : {conferenceId? : string, isTableQuestion : boolean}) {
   const [keyword, setKeyword] = useState('')
   const [page, setPage] = useState(1)
   const debouncedKeyword = useDebounce(keyword, 300)
@@ -34,7 +34,9 @@ export function QuestionsDataTable({conferenceId} : {conferenceId? : string}) {
 
   return (
     <DataTable
-      columns={columns}
+      columns={columns({
+        isTableQuestion
+      })}
       data={questions}
       searchKey="question"
       searchPlaceholder="Search questions..."

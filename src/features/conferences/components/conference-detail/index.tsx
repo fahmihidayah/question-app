@@ -69,6 +69,6 @@ export default function DashboardConferenceDetail({
                 </div>
             </div>
         </Card>
-        <QuestionsDataTable conferenceId={`${conference.id}`} />
+        <QuestionsDataTable conferenceId={`${conference.id}`} isTableQuestion={false} />
     </div>
 }

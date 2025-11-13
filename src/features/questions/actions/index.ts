@@ -121,6 +121,25 @@ export const deleteQuestion = async (questionId: number) => {
     }
 }
 
+export const updateQuestionStatus = async (questionId: number, accept: boolean) => {
+    const payload = await getPayload({ config });
+
+    try {
+        const result = await payload.update({
+            collection: "questions",
+            id: questionId.toString(),
+            data: {
+                accept: accept
+            }
+        });
+
+        return { success: true, data: result };
+    } catch (error) {
+        console.error("Error updating question status:", error);
+        return { success: false, error: "Failed to update question status" };
+    }
+}
+
 export const getQuestions = async (queryAction: QuestionQueryAction = {}) => {
     const payload = await getPayload({ config });
     const user = await getMeUser();
@@ -176,3 +195,4 @@ export const getQuestions = async (queryAction: QuestionQueryAction = {}) => {
         sort: '-createdAt'
     });
 }
+

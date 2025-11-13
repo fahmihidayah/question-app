@@ -33,7 +33,7 @@ export function ConferencesDataTable() {
 
   return (
     <DataTable
-      columns={columns}
+      columns={columns()}
       data={conferences}
       searchKey="title"
       searchPlaceholder="Search conferences..."
