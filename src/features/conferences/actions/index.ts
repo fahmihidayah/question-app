@@ -6,6 +6,7 @@ import config from "@payload-config";
 import { getMeUser } from "@/utilities/getMeUser";
 import { QueryAction } from "@/types/query-action";
 import { revalidateTag } from "next/cache";
+import { Conference } from "@/payload-types";
 
 export const findByIdConferences = async (slug: string) => {
     const payload = await getPayload({ config });
@@ -63,6 +64,24 @@ export const findAllConferences = async () => {
             }
         }
     });
+}
+
+export const  getConferenceBySlug = async (slug : string) : Promise<Conference | undefined> => {
+    const payload = await getPayload({
+        config
+    })
+
+    const conferenceDocs = await payload.find({
+        collection : "conferences",
+        where : {
+            slug : {
+                equals : slug
+            }
+        }
+    });
+    if(conferenceDocs && conferenceDocs.docs.length > 0) {
+        return conferenceDocs.docs[0];
+    }
 }
 
 export const getConferences = async (queryAction: QueryAction) => {
