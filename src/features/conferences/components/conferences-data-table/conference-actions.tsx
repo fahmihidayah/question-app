@@ -80,7 +80,7 @@ export function ConferenceActions({ conference }: ConferenceActionsProps) {
     <>
       <ActionMenu>
         <DropdownMenuItem asChild>
-          <Link href={`/conferences/${conference.slug}`}>
+          <Link href={`/dashboard/conferences/${conference.id}`}>
             <Eye className="mr-2 h-4 w-4" />
             View
           </Link>

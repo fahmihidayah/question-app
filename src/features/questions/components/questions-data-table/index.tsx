@@ -7,7 +7,7 @@ import { columns } from "./columns"
 import { useState } from "react"
 import { useDebounce } from "@/hooks/use-debounce"
 
-export function QuestionsDataTable() {
+export function QuestionsDataTable({conferenceId} : {conferenceId? : string}) {
   const [keyword, setKeyword] = useState('')
   const [page, setPage] = useState(1)
   const debouncedKeyword = useDebounce(keyword, 300)
@@ -21,7 +21,8 @@ export function QuestionsDataTable() {
     queryFn: async () => {
       return await getQuestions({
         keyword: debouncedKeyword,
-        page
+        page,
+        conferenceId
       })
     },
   })

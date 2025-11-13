@@ -5,7 +5,7 @@ import { QuestionFormSchema } from "../type";
 import { equal } from "assert";
 import { sendEvent } from "@/utilities/pusher/pusher-server";
 import { getMeUser } from "@/utilities/getMeUser";
-import { QueryAction } from "@/types/query-action";
+import { QueryAction, QuestionQueryAction } from "@/types/query-action";
 
 
 export const getListQuestionByConferenceId = async (id?: number) => {
@@ -121,7 +121,7 @@ export const deleteQuestion = async (questionId: number) => {
     }
 }
 
-export const getQuestions = async (queryAction: QueryAction = {}) => {
+export const getQuestions = async (queryAction: QuestionQueryAction = {}) => {
     const payload = await getPayload({ config });
     const user = await getMeUser();
 
@@ -130,6 +130,23 @@ export const getQuestions = async (queryAction: QueryAction = {}) => {
 
     // Build the where clause
     const whereConditions: any[] = [];
+
+    // Add conference or user filter
+    if (queryAction.conferenceId) {
+        // Query by conferenceId if provided
+        whereConditions.push({
+            conference: {
+                equals: queryAction.conferenceId
+            }
+        });
+    } else if (user) {
+        // Query by user if conferenceId is not provided
+        whereConditions.push({
+            user: {
+                equals: user.user.id
+            }
+        });
+    }
 
     // Add keyword search if provided
     if (queryAction.keyword && queryAction.keyword.trim() !== '') {

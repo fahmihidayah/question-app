@@ -66,6 +66,17 @@ export const findAllConferences = async () => {
     });
 }
 
+export const getConferenceById = async ( id : string ) : Promise<Conference | undefined> => {
+    const payload = await getPayload({
+        config
+    })
+
+    return await payload.findByID({
+        collection : "conferences",
+        id : id 
+    })
+}
+
 export const  getConferenceBySlug = async (slug : string) : Promise<Conference | undefined> => {
     const payload = await getPayload({
         config

@@ -4,5 +4,5 @@ export type QueryAction = {
 }
 
 export type QuestionQueryAction =  QueryAction & {
-    conferenceId : string
+    conferenceId?: string
 }
