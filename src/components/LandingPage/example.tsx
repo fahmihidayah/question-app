@@ -53,8 +53,8 @@ const LandingPageWithAuth = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 dark:border-blue-400"></div>
       </div>
     );
   }
@@ -63,7 +63,7 @@ const LandingPageWithAuth = () => {
     <div>
       {/* Error Message Banner */}
       {errorMessage && (
-        <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4 relative">
+        <div className="bg-red-100 dark:bg-red-900/20 border-l-4 border-red-500 dark:border-red-800 text-red-700 dark:text-red-400 p-4 mb-4 relative">
           <div className="flex justify-between items-center">
             <div>
               <p className="font-semibold">Access Denied</p>
@@ -71,7 +71,7 @@ const LandingPageWithAuth = () => {
             </div>
             <button
               onClick={() => setErrorMessage(null)}
-              className="text-red-500 hover:text-red-700 text-xl font-bold "
+              className="text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 text-xl font-bold "
               style={{
                 WebkitTapHighlightColor: 'transparent',
                 touchAction: 'manipulation'

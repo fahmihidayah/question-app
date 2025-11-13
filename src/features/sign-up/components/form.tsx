@@ -61,26 +61,26 @@ export const SignUpForm: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
             <div className="w-full max-w-md">
-                <div className="bg-white rounded-2xl shadow-xl p-8 border border-blue-100">
+                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 border border-blue-100 dark:border-gray-700">
                     {/* Header */}
                     <div className="text-center mb-8">
-                        <h1 className="text-3xl font-bold text-blue-900 mb-2">Buat Akun Baru</h1>
-                        <p className="text-blue-600">Bergabunglah dengan KonfQ</p>
+                        <h1 className="text-3xl font-bold text-blue-900 dark:text-blue-400 mb-2">Buat Akun Baru</h1>
+                        <p className="text-blue-600 dark:text-blue-300">Bergabunglah dengan KonfQ</p>
                     </div>
 
                     {/* Success Message */}
                     {successMessage && (
-                        <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-                            <p className="text-green-700 text-sm">{successMessage}</p>
+                        <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+                            <p className="text-green-700 dark:text-green-400 text-sm">{successMessage}</p>
                         </div>
                     )}
 
                     {/* Error Message */}
                     {submitError && (
-                        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-                            <p className="text-red-700 text-sm">{submitError}</p>
+                        <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                            <p className="text-red-700 dark:text-red-400 text-sm">{submitError}</p>
                         </div>
                     )}
 
@@ -184,11 +184,11 @@ export const SignUpForm: React.FC = () => {
 
                     {/* Footer */}
                     <div className="mt-8 text-center">
-                        <p className="text-sm text-blue-600">
+                        <p className="text-sm text-blue-600 dark:text-blue-400">
                             Sudah punya akun?{' '}
-                            <Link 
-                                href="/sign-in" 
-                                className="font-semibold text-blue-700 hover:text-blue-900 hover:underline transition-colors duration-200"
+                            <Link
+                                href="/sign-in"
+                                className="font-semibold text-blue-700 dark:text-blue-300 hover:text-blue-900 dark:hover:text-blue-100 hover:underline transition-colors duration-200"
                             >
                                 Masuk di sini
                             </Link>

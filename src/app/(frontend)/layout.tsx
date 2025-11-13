@@ -17,7 +17,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       <body>
         <ThemeProvider>
           <QueryProvider>
-            <main className='bg-gray-50'>{children}</main>
+            <main className='bg-blue-100 dark:bg-blue-900/30'>{children}</main>
           </QueryProvider>
         </ThemeProvider>
       </body>

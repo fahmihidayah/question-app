@@ -61,21 +61,21 @@ const Navbar = ({ isAuthenticated = false, userName }: NavbarProps) => {
   };
 
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-100 relative z-50" style={{ WebkitTapHighlightColor: 'transparent' }}>
+    <nav className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-100 dark:border-gray-700 relative z-50" style={{ WebkitTapHighlightColor: 'transparent' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
-            <MessageCircle className="h-8 w-8 text-blue-600" />
-            <span className="ml-2 text-xl font-bold text-gray-900">KonfQ</span>
+            <MessageCircle className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+            <span className="ml-2 text-xl font-bold text-gray-900 dark:text-white">KonfQ</span>
           </Link>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              onTouchStart={() => {}} 
-              className="p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 transition-colors duration-200 touch-manipulation select-none"
+              onTouchStart={() => {}}
+              className="p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 touch-manipulation select-none"
               aria-label="Toggle mobile menu"
               style={{ WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation' }}
             >
@@ -96,7 +96,7 @@ const Navbar = ({ isAuthenticated = false, userName }: NavbarProps) => {
                 <div className="relative">
                   <button
                     onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                    className="flex items-center space-x-2 text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md font-medium transition-colors duration-200"
+                    className="flex items-center space-x-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md font-medium transition-colors duration-200"
                   >
                     <User className="w-5 h-5" />
                     <span>{userName || 'Pengguna'}</span>
@@ -104,44 +104,44 @@ const Navbar = ({ isAuthenticated = false, userName }: NavbarProps) => {
 
                   {/* Dropdown Menu */}
                   {isProfileMenuOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 py-1 z-50 ">
-                      <div className="px-4 py-2 text-sm text-gray-900 border-b border-gray-100">
+                    <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50 ">
+                      <div className="px-4 py-2 text-sm text-gray-900 dark:text-white border-b border-gray-100 dark:border-gray-700">
                         <div className="font-medium">{userName || 'Pengguna'}</div>
-                        <div className="text-gray-500">Pengelola Konferensi</div>
+                        <div className="text-gray-500 dark:text-gray-400">Pengelola Konferensi</div>
                       </div>
                       
                       <Link
                         href="/dashboard/conferences"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200"
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
                         onClick={() => setIsProfileMenuOpen(false)}
                       >
                         Konferensi Saya
                       </Link>
-                      
+
                       <Link
                         href="/dashboard/auto-conferences"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200"
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
                         onClick={() => setIsProfileMenuOpen(false)}
                       >
                         Auto Create Konferensi
                       </Link>
-                      
+
                       <Link
                         href="/dashboard"
-                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-200"
+                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
                         onClick={() => setIsProfileMenuOpen(false)}
                       >
                         Dashboard
                       </Link>
-                      
+
                       <button
                         onClick={handleLogoutClick}
                         disabled={isLoggingOut}
-                        className="flex items-center w-full px-4 py-2 text-sm text-red-700 hover:bg-red-50 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="flex items-center w-full px-4 py-2 text-sm text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {isLoggingOut ? (
                           <>
-                            <div className="w-4 h-4 mr-2 animate-spin border-2 border-red-600 border-t-transparent rounded-full"></div>
+                            <div className="w-4 h-4 mr-2 animate-spin border-2 border-red-600 dark:border-red-400 border-t-transparent rounded-full"></div>
                             Sedang Keluar...
                           </>
                         ) : (
@@ -158,18 +158,18 @@ const Navbar = ({ isAuthenticated = false, userName }: NavbarProps) => {
             ) : (
               <>
                 {/* Guest Navigation */}
-               
-                
+
+
                 <Link
                  href={"/sign-in"}
-                  className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md font-medium transition-colors duration-200"
+                  className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white px-3 py-2 rounded-md font-medium transition-colors duration-200"
                 >
                   Masuk
                 </Link>
-                
+
                 <Link
                  href={"/sign-up"}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-105"
+                  className="bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-105"
                 >
                   Daftar Gratis
                 </Link>
@@ -182,39 +182,39 @@ const Navbar = ({ isAuthenticated = false, userName }: NavbarProps) => {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden absolute w-full top-full left-0 right-0 z-50 transform transition-all duration-200 ease-out">
-          <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200 shadow-lg" style={{ WebkitTransform: 'translateZ(0)' }}>
+          <div className="px-2 pt-2 pb-3 space-y-1 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 shadow-lg" style={{ WebkitTransform: 'translateZ(0)' }}>
             {isAuthenticated ? (
               <>
                 {/* User Info */}
-                <div className="px-3 py-2 text-sm text-gray-900 border-b border-gray-100">
+                <div className="px-3 py-2 text-sm text-gray-900 dark:text-white border-b border-gray-100 dark:border-gray-700">
                   <div className="font-medium">{userName || 'Pengguna'}</div>
-                  <div className="text-gray-500">Pengelola Konferensi</div>
+                  <div className="text-gray-500 dark:text-gray-400">Pengelola Konferensi</div>
                 </div>
 
                 <Link
                   href="/conferences"
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors duration-200"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Konferensi
                 </Link>
-                
+
                 <Link
                   href="/auto-conferences"
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors duration-200"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Auto Create Konferensi
                 </Link>
-                
+
                 <Link
                   href="/dashboard"
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors duration-200"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Dashboard
                 </Link>
-                
+
                 <button
                   onClick={() => {
                     setIsMobileMenuOpen(false);
@@ -222,12 +222,12 @@ const Navbar = ({ isAuthenticated = false, userName }: NavbarProps) => {
                   }}
                   onTouchStart={() => {}}
                   disabled={isLoggingOut}
-                  className="flex items-center w-full px-3 py-2 rounded-md text-base font-medium text-red-700 hover:bg-red-50 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation select-none"
+                  className="flex items-center w-full px-3 py-2 rounded-md text-base font-medium text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation select-none"
                   style={{ WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation' }}
                 >
                   {isLoggingOut ? (
                     <>
-                      <div className="w-4 h-4 mr-2 animate-spin border-2 border-red-600 border-t-transparent rounded-full"></div>
+                      <div className="w-4 h-4 mr-2 animate-spin border-2 border-red-600 dark:border-red-400 border-t-transparent rounded-full"></div>
                       Sedang Keluar...
                     </>
                   ) : (
@@ -242,16 +242,16 @@ const Navbar = ({ isAuthenticated = false, userName }: NavbarProps) => {
               <>
                 <Link
                   href="/conferences"
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50 transition-colors duration-200"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
                   onClick={() => {
                     setIsMobileMenuOpen(false)
                   }}
                 >
                   Jelajahi Konferensi
                 </Link>
-                
+
                 <button
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors duration-200 touch-manipulation select-none"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 touch-manipulation select-none"
                   onClick={() => {
                       router.push("/auth")
                      setIsMobileMenuOpen(false)
@@ -261,9 +261,9 @@ const Navbar = ({ isAuthenticated = false, userName }: NavbarProps) => {
                 >
                   Masuk
                 </button>
-                
+
                 <button
-                  className="block px-3 py-2 rounded-md text-base font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200 mx-3 touch-manipulation select-none"
+                  className="block px-3 py-2 rounded-md text-base font-medium bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors duration-200 mx-3 touch-manipulation select-none"
                   onClick={() => {
                       router.push("/sign-up")
                     setIsMobileMenuOpen(false)
