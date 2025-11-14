@@ -1,13 +1,17 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+// import { getMeUser, getMeUserServer, getUserFromToken } from './utilities/getMeUser'
+import { cookies } from 'next/headers'
+// import { getMeUserServer } from './utilities/getMeUserServer';
+import { getMeUser } from './utilities/getMeUser';
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-
+  const cookiesReq = await cookies();
   // Check if the request is for dashboard routes
   if (pathname.startsWith('/dashboard')) {
-    const token = request.cookies.get('payload-token')?.value
 
+  const token = cookiesReq.get('payload-token')?.value
     // If no token, redirect to sign-in page
     if (!token) {
       const signInUrl = new URL('/sign-in', request.url)
@@ -19,16 +23,10 @@ export async function middleware(request: NextRequest) {
     // Verify the token by making a request to the API
     try {
       const baseUrl = request.nextUrl.origin
-      const meUserReq = await fetch(`${baseUrl}/api/users/me`, {
-        headers: {
-          Authorization: `JWT ${token}`,
-        },
-      })
-
-      const { user } = await meUserReq.json()
+      const user = await getMeUser()
 
       // If user is not authenticated, redirect to sign-in
-      if (!meUserReq.ok || !user) {
+      if (!user.user) {
         const signInUrl = new URL('/sign-in', request.url)
         signInUrl.searchParams.set('redirect', pathname)
         return NextResponse.redirect(signInUrl)

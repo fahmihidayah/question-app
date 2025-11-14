@@ -4,8 +4,9 @@ import { getPayload } from "payload";
 import { QuestionFormSchema } from "../type";
 import { equal } from "assert";
 import { sendEvent } from "@/utilities/pusher/pusher-server";
-import { getMeUser } from "@/utilities/getMeUser";
 import { QueryAction, QuestionQueryAction } from "@/types/query-action";
+import { getMeUser } from "@/utilities/getMeUser";
+// import { getMeUserServer } from "@/utilities/getMeUserServer";
 
 
 export const getListQuestionByConferenceId = async (id?: number) => {
@@ -158,7 +159,7 @@ export const getQuestions = async (queryAction: QuestionQueryAction = {}) => {
                 equals: queryAction.conferenceId
             }
         });
-    } else if (user) {
+    } else if (user.user) {
         // Query by user if conferenceId is not provided
         whereConditions.push({
             user: {

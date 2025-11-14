@@ -3,10 +3,11 @@
 import { getPayload } from "payload";
 import { QuestionFormSchema, ConferenceFormSchema } from "../type";
 import config from "@payload-config";
-import { getMeUser } from "@/utilities/getMeUser";
 import { QueryAction } from "@/types/query-action";
 import { revalidateTag } from "next/cache";
 import { Conference } from "@/payload-types";
+import { getMeUser } from "@/utilities/getMeUser";
+// import { getMeUserServer } from "@/utilities/getMeUserServer";
 
 export const findByIdConferences = async (slug: string) => {
     const payload = await getPayload({ config });
@@ -56,6 +57,7 @@ export const findByIdConferences = async (slug: string) => {
 export const findAllConferences = async () => {
     const payload = await getPayload({ config });
     const user = await getMeUser();
+    if(!user.user) return
     return payload.find({
         collection: "conferences",
         where: {
@@ -98,6 +100,7 @@ export const  getConferenceBySlug = async (slug : string) : Promise<Conference |
 export const getConferences = async (queryAction: QueryAction) => {
     const payload = await getPayload({ config });
     const user = await getMeUser();
+    if(!user.user) return;
 
     const limit = 10;
     const page = queryAction.page || 1;
@@ -205,7 +208,7 @@ export const createConferenceAction = async (conferenceForm: ConferenceFormSchem
 
     const user = await getMeUser();
 
-    if (user.user !== null) {
+    if (user.user) {
         const slug = conferenceForm.title.toLowerCase().split(" ").join("-");
 
         const conference = await payload.create({

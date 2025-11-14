@@ -13,8 +13,6 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { ModeToggle } from "@/components/mode-toggle"
-import { getMeUser } from "@/utilities/getMeUser"
-import { redirect } from "next/navigation"
 
 export default async function DashboardLayout({
     children

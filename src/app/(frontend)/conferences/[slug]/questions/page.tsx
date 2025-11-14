@@ -1,6 +1,7 @@
 import { getConferenceBySlug } from "@/features/conferences/actions"
 import QuestionForm from "@/features/questions/components/form";
 import { getMeUser } from "@/utilities/getMeUser";
+// import { getMeUserServer } from "@/utilities/getMeUserServer";
 import { notFound, redirect } from "next/navigation";
 
 type Props = {
@@ -11,7 +12,7 @@ type Props = {
 export default async function Page({params} : Props) {
     const slug = (await params).slug
 
-    const user = await getMeUser();
+    const user = await getMeUser()
     console.log("user ", user)
     if(!user.user) {
         redirect(`/sign-in?redirect=/conferences/${slug}/questions`)
