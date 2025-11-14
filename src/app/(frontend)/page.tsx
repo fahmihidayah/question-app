@@ -1,8 +1,11 @@
 import LandingPageWithAuth from '@/components/LandingPage/example'
 import { Metadata } from 'next'
+import { Suspense } from 'react'
 
 export default async function HomePage() {
-    return <LandingPageWithAuth />
+    return <Suspense>
+        <LandingPageWithAuth />
+    </Suspense>
 }
 
 export async function generateMetadata(): Promise<Metadata> {

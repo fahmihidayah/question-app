@@ -1,5 +1,3 @@
-'use server';
-
 import config from "@payload-config";
 import { notFound, redirect } from "next/navigation";
 import { getPayload } from "payload";
