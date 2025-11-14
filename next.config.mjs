@@ -6,7 +6,7 @@ const nextConfig = {
   output: 'standalone',
   experimental: {
     serverActions: {
-      allowedOrigins: ['question-app-production.up.railway.app', 'localhost'],
+      allowedOrigins: ['question-app-production.up.railway.app', 'localhost', 'tanya.kuttabalfatihmalang.com'],
     },
   },
   webpack: (webpackConfig) => {
