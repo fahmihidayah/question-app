@@ -50,7 +50,7 @@ export function ConferenceActions({ conference }: ConferenceActionsProps) {
   }
 
   const handleCopy = async () => {
-    const url = `${window.location.origin}/conferences/${conference.slug}/question`
+    const url = `${window.location.origin}/conferences/${conference.slug}/questions`
     try {
       await navigator.clipboard.writeText(url)
       alert("Conference link copied to clipboard!")
@@ -60,7 +60,7 @@ export function ConferenceActions({ conference }: ConferenceActionsProps) {
   }
 
   const handleShare = async () => {
-    const url = `${window.location.origin}/conferences/${conference.slug}/question`
+    const url = `${window.location.origin}/conferences/${conference.slug}/questions`
     
     if (navigator.share) {
       try {

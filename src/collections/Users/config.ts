@@ -8,7 +8,10 @@ export const Users: CollectionConfig = withUsersCollection({
     group: 'User Management',
     
   },
-  auth: true,
+  auth: {
+    // 1 week expiration
+    tokenExpiration: 7 * 24 * 60 * 60, // in seconds
+  },
   fields: [
     {
       name: 'name',

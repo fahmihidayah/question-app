@@ -31,7 +31,7 @@ export default function ListConferences({
     };
 
     async function handleCopy(conference: Conference) {
-         navigator.clipboard.writeText(window.location.origin + `/conferences/${conference.slug || ''}/question`);
+         navigator.clipboard.writeText(window.location.origin + `/conferences/${conference.slug || ''}/questions`);
         alert("Link konferensi berhasil disalin ke clipboard!");
     }
 
@@ -41,10 +41,10 @@ export default function ListConferences({
         if (navigator.share) {
             navigator.share({
                 title: conference.title,
-                url: window.location.origin + `/conferences/${conference.slug || ''}/question`,
+                url: window.location.origin + `/conferences/${conference.slug || ''}/questions`,
             });
         } else {
-            navigator.clipboard.writeText(window.location.origin + `/conferences/${conference.slug || ''}/question`);
+            navigator.clipboard.writeText(window.location.origin + `/conferences/${conference.slug || ''}/questions`);
             alert("Link konferensi berhasil disalin ke clipboard!");
         }
     };

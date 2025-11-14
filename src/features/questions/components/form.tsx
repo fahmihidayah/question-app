@@ -57,32 +57,32 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ user, conferenceSlug, confe
     };
 
     return (
-        <div className="min-h-screen bg-white p-4 w-full">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-900 dark:to-gray-800 p-4 w-full">
             <div className="w-full max-w-2xl mx-auto">
                 {/* Header */}
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">Ajukan Pertanyaan</h1>
+                    <h1 className="text-3xl font-bold text-blue-900 dark:text-blue-400 mb-2">Ajukan Pertanyaan</h1>
                     {conferenceName && (
-                        <p className="text-gray-600">Untuk: {conferenceName}</p>
+                        <p className="text-blue-600 dark:text-blue-300">Untuk: {conferenceName}</p>
                     )}
                 </div>
 
                 {/* Success Message */}
                 {successMessage && (
-                    <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-                        <p className="text-green-700 text-sm">{successMessage}</p>
+                    <div className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+                        <p className="text-green-700 dark:text-green-400 text-sm">{successMessage}</p>
                     </div>
                 )}
 
                 {/* Error Message */}
                 {submitError && (
-                    <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-                        <p className="text-red-700 text-sm">{submitError}</p>
+                    <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                        <p className="text-red-700 dark:text-red-400 text-sm">{submitError}</p>
                     </div>
                 )}
 
                 {/* Form */}
-                <div className="space-y-6">
+                <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 border border-blue-100 dark:border-gray-700">
                     <Form  {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                             {/* Hidden conference field */}
@@ -125,7 +125,7 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ user, conferenceSlug, confe
                                 control={form.control}
                                 name='hideName'
                                 render={({ field }) => (
-                                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border border-gray-300 dark:border-gray-600 p-4">
                                         <FormControl>
                                             <Checkbox
                                                 checked={field.value}
@@ -137,7 +137,7 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ user, conferenceSlug, confe
                                             <FormLabel>
                                                 Sembunyikan Nama Saya
                                             </FormLabel>
-                                            <p className="text-sm text-muted-foreground">
+                                            <p className="text-sm text-gray-600 dark:text-gray-400">
                                                 Jika dicentang, nama Anda tidak akan ditampilkan saat pertanyaan ditayangkan
                                             </p>
                                         </div>
@@ -153,12 +153,12 @@ const QuestionForm: React.FC<QuestionFormProps> = ({ user, conferenceSlug, confe
                                 render={({ field }) => (
                                     <FormItem>
                                         <FormLabel>Pertanyaan Anda
-                                            <span className="text-red-500 ml-1">*</span>
+                                            <span className="text-red-500 dark:text-red-400 ml-1">*</span>
                                         </FormLabel>
                                         <FormControl>
                                             <textarea
                                                 rows={6}
-                                                className="text-black flex w-full rounded-lg border px-4 py-3 text-base transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50 placeholder:text-gray-400 touch-manipulation resize-vertical border-gray-300 hover:border-gray-400"
+                                                className="text-gray-900 dark:text-gray-100 flex w-full rounded-lg border bg-white dark:bg-gray-700 px-4 py-3 text-base transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 disabled:bg-gray-50 dark:disabled:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50 placeholder:text-gray-400 dark:placeholder:text-gray-500 touch-manipulation resize-vertical border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500"
                                                 placeholder="Ketik pertanyaan Anda di sini..."
                                                 disabled={isSubmitting}
                                                 style={{
