@@ -3,12 +3,15 @@ import './styles.css'
 import { QueryProvider } from '@/providers/QueryProvider'
 import { ThemeProvider } from '@/providers/ThemeProvider'
 import { Navbar } from '@/components/layouts/navbar'
+import { Metadata } from 'next'
 
-export const metadata = {
-  description: 'A modern web application built with Payload CMS and Next.js.',
-  title: 'Payload Starter',
+
+export async function generateMetadata(): Promise<Metadata> {
+    return {
+        title : "KonfQ - Platform Tanya Jawab Konferensi",
+        description : "Platform interaktif untuk tanya jawab konferensi yang memungkinkan audiens berpartisipasi aktif dalam diskusi"
+    }
 }
-
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props
 
