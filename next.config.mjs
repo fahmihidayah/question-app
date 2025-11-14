@@ -6,7 +6,7 @@ const nextConfig = {
   output: 'standalone',
   experimental: {
     serverActions: {
-      allowedOrigins: ['your.domain.com'],
+      allowedOrigins: ['question-app-production.up.railway.app', 'localhost'],
     },
   },
   webpack: (webpackConfig) => {
