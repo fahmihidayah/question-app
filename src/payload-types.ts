@@ -133,6 +133,13 @@ export interface User {
   id: number;
   name?: string | null;
   isSuperUser?: boolean | null;
+  hashedPassword?: string | null;
+  hashSalt?: string | null;
+  hashIterations?: number | null;
+  verificationCode?: string | null;
+  verificationHash?: string | null;
+  verificationTokenExpire?: number | null;
+  verificationKind?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -242,7 +249,7 @@ export interface Question {
   hideName?: boolean | null;
   accept?: boolean | null;
   conference: number | Conference;
-  user: number | User;
+  user?: (number | null) | User;
   updatedAt: string;
   createdAt: string;
   deletedAt?: string | null;
@@ -410,6 +417,13 @@ export interface PayloadMigration {
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
   isSuperUser?: T;
+  hashedPassword?: T;
+  hashSalt?: T;
+  hashIterations?: T;
+  verificationCode?: T;
+  verificationHash?: T;
+  verificationTokenExpire?: T;
+  verificationKind?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;

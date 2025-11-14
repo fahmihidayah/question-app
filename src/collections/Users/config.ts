@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
-export const Users: CollectionConfig = {
+import { withUsersCollection } from "payload-auth-plugin/collection"
+export const Users: CollectionConfig = withUsersCollection({
   slug: 'users',
   admin: {
     useAsTitle: 'email',
@@ -22,3 +23,4 @@ export const Users: CollectionConfig = {
     // Add more fields as needed
   ],
 }
+)

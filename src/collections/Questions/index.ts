@@ -45,7 +45,8 @@ const Questions: CollectionConfig = {
       name : "user",
       type : "relationship",
       relationTo : "users",
-      required : true,
+      required : false,
+      defaultValue : undefined,
       hasMany : false
     }
   ],
