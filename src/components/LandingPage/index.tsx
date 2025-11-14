@@ -53,14 +53,14 @@ const LandingPage = ({ isAuthenticated = false, userName }: LandingPageProps) =>
             ) : (
               <>
                 <Link
-                  href="/conferences/create"
+                  href="/dashboard/conferences/create"
                   className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 flex items-center gap-2 shadow-lg"
                 >
                   Buat Konferensi Baru
                   <ArrowRight className="w-5 h-5" />
                 </Link>
                 <Link
-                  href="/conferences"
+                  href="/dashboard/conferences"
                   className="border-2 border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 flex items-center gap-2"
                 >
                   Lihat Konferensi Anda
