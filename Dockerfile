@@ -44,15 +44,27 @@ ENV NODE_OPTIONS="--no-deprecation"
 
 # PayloadCMS requires PAYLOAD_SECRET for build process
 
-# Build arguments for environment variables
-ARG DATABASE_URI
 ARG PAYLOAD_SECRET
+ARG DATABASE_NAME
+ARG DATABASE_URI
 ARG NEXT_PUBLIC_SERVER_URL
+ARG NEXT_PUBLIC_PAYLOAD_AUTH_URL
 
-# Set environment variables from build arguments
-ENV DATABASE_URI=$DATABASE_URI
-ENV PAYLOAD_SECRET=$PAYLOAD_SECRET
-ENV NEXT_PUBLIC_SERVER_URL=$NEXT_PUBLIC_SERVER_URL
+ARG PUSHER_APP_ID
+ARG NEXT_PUBLIC_PUSHER_KEY
+ARG PUSHER_SECRET
+ARG NEXT_PUBLIC_PUSHER_CLUSTER
+
+ENV PAYLOAD_SECRET=${PAYLOAD_SECRET}
+ENV DATABASE_NAME=${DATABASE_NAME}
+ENV DATABASE_URI=${DATABASE_URI}
+ENV NEXT_PUBLIC_SERVER_URL=${NEXT_PUBLIC_SERVER_URL}
+ENV PAYLOAD_FORCE_READ_ONLY=${PAYLOAD_FORCE_READ_ONLY}
+ENV PUSHER_APP_ID=${PUSHER_APP_ID}
+ENV NEXT_PUBLIC_PUSHER_KEY=${NEXT_PUBLIC_PUSHER_KEY}
+ENV PUSHER_SECRET=${PUSHER_SECRET}
+ENV NEXT_PUBLIC_PUSHER_CLUSTER=${NEXT_PUBLIC_PUSHER_CLUSTER}
+ENV NEXT_PUBLIC_PAYLOAD_AUTH_URL=${NEXT_PUBLIC_PAYLOAD_AUTH_URL}
 
 
 # Generate Payload types and importmap (optional - continue if fails)
@@ -72,15 +84,27 @@ ENV NODE_OPTIONS="--no-deprecation"
 
 # Default environment variables (override these when running the container)
 
-# Build arguments for environment variables
-ARG DATABASE_URI
 ARG PAYLOAD_SECRET
+ARG DATABASE_NAME
+ARG DATABASE_URI
 ARG NEXT_PUBLIC_SERVER_URL
+ARG NEXT_PUBLIC_PAYLOAD_AUTH_URL
 
-# Set environment variables from build arguments
-ENV DATABASE_URI=$DATABASE_URI
-ENV PAYLOAD_SECRET=$PAYLOAD_SECRET
-ENV NEXT_PUBLIC_SERVER_URL=$NEXT_PUBLIC_SERVER_URL
+ARG PUSHER_APP_ID
+ARG NEXT_PUBLIC_PUSHER_KEY
+ARG PUSHER_SECRET
+ARG NEXT_PUBLIC_PUSHER_CLUSTER
+
+ENV PAYLOAD_SECRET=${PAYLOAD_SECRET}
+ENV DATABASE_NAME=${DATABASE_NAME}
+ENV DATABASE_URI=${DATABASE_URI}
+ENV NEXT_PUBLIC_SERVER_URL=${NEXT_PUBLIC_SERVER_URL}
+ENV PAYLOAD_FORCE_READ_ONLY=${PAYLOAD_FORCE_READ_ONLY}
+ENV PUSHER_APP_ID=${PUSHER_APP_ID}
+ENV NEXT_PUBLIC_PUSHER_KEY=${NEXT_PUBLIC_PUSHER_KEY}
+ENV PUSHER_SECRET=${PUSHER_SECRET}
+ENV NEXT_PUBLIC_PUSHER_CLUSTER=${NEXT_PUBLIC_PUSHER_CLUSTER}
+ENV NEXT_PUBLIC_PAYLOAD_AUTH_URL=${NEXT_PUBLIC_PAYLOAD_AUTH_URL}
 
 # Create user for security
 RUN addgroup --system --gid 1001 nodejs
@@ -88,12 +112,6 @@ RUN adduser --system --uid 1001 nextjs
 
 # Copy public assets
 COPY --from=builder /app/public ./public
-
-# Create media directory with proper ownership and permissions
-RUN mkdir -p ./media && chown -R nextjs:nodejs ./media && chmod -R 755 ./media
-
-# Copy existing media files if they exist (with proper ownership)
-COPY --from=builder --chown=nextjs:nodejs /app/media ./media
 
 # Create .next directory with proper ownership
 RUN mkdir .next && chown nextjs:nodejs .next
@@ -114,7 +132,7 @@ ENV HOSTNAME="0.0.0.0"
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-CMD wget --quiet --tries=1 --spider http://localhost:3000/api/health || exit 1
+  CMD wget --quiet --tries=1 --spider http://localhost:3000/api/health || exit 1
 
 # Start the application with dumb-init
 ENTRYPOINT ["dumb-init", "--"]
