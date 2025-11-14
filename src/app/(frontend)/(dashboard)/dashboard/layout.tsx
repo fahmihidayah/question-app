@@ -13,12 +13,15 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { ModeToggle } from "@/components/mode-toggle"
+import { getMeUser } from "@/utilities/getMeUser"
+import { redirect } from "next/navigation"
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
     children
 }: {
     children: ReactNode
 }) {
+   
     return (
         <SidebarProvider>
             <AppSidebar />
