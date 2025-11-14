@@ -85,12 +85,7 @@ export function AutoConferenceActions({ conference }: AutoConferenceActionsProps
             View
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href={`/auto-conferences/${conference.id}/edit`}>
-            <Edit className="mr-2 h-4 w-4" />
-            Edit
-          </Link>
-        </DropdownMenuItem>
+        
         <DropdownMenuItem onClick={handleCopy}>
           <Copy className="mr-2 h-4 w-4" />
           Copy Link
