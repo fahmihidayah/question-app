@@ -1,10 +1,11 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
-import { Question } from "@/payload-types"
+import { Question, User } from "@/payload-types"
 import { SortableHeader } from "@/components/ui/data-table"
 import Link from "next/link"
 import { QuestionActions } from "./question-actions"
+import { userAgent } from "next/server"
 
 export const columns = ({
   isTableQuestion
@@ -15,7 +16,7 @@ export const columns = ({
     {
       accessorKey: "question",
       header: ({ column }) => (
-        <SortableHeader column={column}>Question</SortableHeader>
+        <SortableHeader column={column}>Pertanyaan</SortableHeader>
       ),
       cell: ({ row }) => {
         const question = row.getValue("question") as string
@@ -31,20 +32,22 @@ export const columns = ({
     {
       accessorKey: "name",
       header: ({ column }) => (
-        <SortableHeader column={column}>Asked By</SortableHeader>
+        <SortableHeader column={column}>Nama</SortableHeader>
       ),
-      cell: ({ row }) => {
-        const name = row.getValue("name") as string
-        return (
-          <div className="font-medium">
-            {name}
-          </div>
-        )
-      },
+      // cell: ({ row }) => {
+      //   row.user
+      //   const user = row.get
+      //   console.log('user', JSON.stringify(row))
+      //   return (
+      //     <div className="font-medium">
+      //       test
+      //     </div>
+      //   )
+      // },
     },
     {
       id: "conference",
-      header: "Conference",
+      header: "Konferensi",
       cell: ({ row }) => {
         const question = row.original
 
@@ -60,19 +63,19 @@ export const columns = ({
         }
 
 
-        return <span className="text-muted-foreground">No conference</span>
+        return <span className="text-muted-foreground">Tidak ada konferensi</span>
       },
     },
     ... ((isTableQuestion) ? []
       : [{
       id: "conferenceType",
-      header: "Pusblish",
+      header: "Publikasi",
       cell: ({ row }) => {
         const question = row.original
         return (
           <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
             {
-              question.accept ? "Published" : "Pending"
+              question.accept ? "Dipublikasikan" : "Menunggu"
             }
           </span>
         )
@@ -81,7 +84,7 @@ export const columns = ({
     {
       accessorKey: "createdAt",
       header: ({ column }) => (
-        <SortableHeader column={column}>Created At</SortableHeader>
+        <SortableHeader column={column}>Dibuat Pada</SortableHeader>
       ),
       cell: ({ row }) => {
         const date = row.getValue("createdAt") as string

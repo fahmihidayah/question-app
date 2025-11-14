@@ -11,10 +11,11 @@ import {
   Zap,
   Shield,
   User,
-  ChevronRight
+  ChevronRight,
+  LogOut
 } from "lucide-react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 
 import {
   Sidebar,
@@ -31,6 +32,17 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { getMeUser } from "@/utilities/getMeUser"
+import { logoutAction } from "@/features/sign-in/actions/logout"
+import type { User as UserType } from "@/payload-types"
 
 // Menu items.
 const data = {
@@ -55,29 +67,66 @@ const data = {
       url: "/dashboard/questions",
       icon: MessageSquare,
     },
-    {
-      title: "Wadah Bertanya",
-      url: "/dashboard/ask",
-      icon: HelpCircle,
-    },
+    // {
+    //   title: "Wadah Bertanya",
+    //   url: "/dashboard/ask",
+    //   icon: HelpCircle,
+    // },
   ],
-  navSecondary: [
-    {
-      title: "Pengguna dan Izin",
-      url: "/dashboard/users",
-      icon: Users,
-    },
-    {
-      title: "Pengaturan",
-      url: "/dashboard/settings",
-      icon: Settings,
-    },
-  ],
+  // navSecondary: [
+  //   {
+  //     title: "Pengguna dan Izin",
+  //     url: "/dashboard/users",
+  //     icon: Users,
+  //   },
+  //   {
+  //     title: "Pengaturan",
+  //     url: "/dashboard/settings",
+  //     icon: Settings,
+  //   },
+  // ],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname()
+  const router = useRouter()
   const { state } = useSidebar()
+  const [user, setUser] = React.useState<UserType | null>(null)
+  const [isLoggingOut, setIsLoggingOut] = React.useState(false)
+
+  React.useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const { user: userData } = await getMeUser()
+        setUser(userData)
+      } catch (error) {
+        console.error('Error fetching user:', error)
+      }
+    }
+    fetchUser()
+  }, [])
+
+  const handleLogout = async () => {
+    setIsLoggingOut(true)
+    try {
+      await logoutAction()
+      router.push('/sign-in')
+    } catch (error) {
+      console.error('Logout failed:', error)
+      setIsLoggingOut(false)
+    }
+  }
+
+  const getUserInitials = () => {
+    if (!user) return 'U'
+    const name = user.name || user.email || ''
+    return name
+      .split(' ')
+      .map(n => n[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2)
+  }
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -141,10 +190,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarSeparator className="my-4 bg-gradient-to-r from-transparent via-border to-transparent" />
         
         <SidebarGroup>
-          <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wider">
+          {/* <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground/70 uppercase tracking-wider">
             Administrasi
-          </SidebarGroupLabel>
-          <SidebarGroupContent>
+          </SidebarGroupLabel> */}
+          {/* <SidebarGroupContent>
             <SidebarMenu>
               {data.navSecondary.map((item) => {
                 const isActive = pathname === item.url
@@ -177,36 +226,61 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 )
               })}
             </SidebarMenu>
-          </SidebarGroupContent>
+          </SidebarGroupContent> */}
         </SidebarGroup>
       </SidebarContent>
       
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton 
-              size="lg" 
-              className="relative transition-all duration-200 hover:shadow-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 group"
-              tooltip="Profil Pengguna"
-            >
-              <div className="relative">
-                <Avatar className="h-8 w-8 rounded-lg ring-2 ring-transparent group-hover:ring-blue-200 transition-all duration-200">
-                  <AvatarImage src="/placeholder.svg" alt="User" />
-                  <AvatarFallback className="rounded-lg bg-gradient-to-br from-blue-100 to-purple-100 text-blue-600">
-                    <User className="h-4 w-4" />
-                  </AvatarFallback>
-                </Avatar>
-                <div className="absolute -top-1 -right-1 size-3 bg-green-500 rounded-full border-2 border-white group-data-[collapsible=icon]:hidden" />
-              </div>
-              <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
-                <span className="truncate font-semibold group-hover:text-blue-600 transition-colors duration-200">
-                  User Name
-                </span>
-                <span className="truncate text-xs text-muted-foreground group-hover:text-blue-500 transition-colors duration-200">
-                  user@example.com
-                </span>
-              </div>
-            </SidebarMenuButton>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton
+                  size="lg"
+                  className="relative transition-all duration-200 hover:shadow-lg hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 group"
+                  tooltip="Profil Pengguna"
+                >
+                  <div className="relative">
+                    <Avatar className="h-8 w-8 rounded-lg ring-2 ring-transparent group-hover:ring-blue-200 transition-all duration-200">
+                      <AvatarImage src="/placeholder.svg" alt={user?.name || 'User'} />
+                      <AvatarFallback className="rounded-lg bg-gradient-to-br from-blue-100 to-purple-100 text-blue-600">
+                        {getUserInitials()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="absolute -top-1 -right-1 size-3 bg-green-500 rounded-full border-2 border-white group-data-[collapsible=icon]:hidden" />
+                  </div>
+                  <div className="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
+                    <span className="truncate font-semibold group-hover:text-blue-600 transition-colors duration-200">
+                      {user?.name || 'Loading...'}
+                    </span>
+                    <span className="truncate text-xs text-muted-foreground group-hover:text-blue-500 transition-colors duration-200">
+                      {user?.email || 'Loading...'}
+                    </span>
+                  </div>
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                side="top"
+                align="end"
+                className="w-56"
+              >
+                <DropdownMenuLabel>
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium leading-none">{user?.name || 'User'}</p>
+                    <p className="text-xs leading-none text-muted-foreground">{user?.email || ''}</p>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={handleLogout}
+                  disabled={isLoggingOut}
+                  className="text-red-600 focus:text-red-600 focus:bg-red-50 cursor-pointer"
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>{isLoggingOut ? 'Logging out...' : 'Logout'}</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
