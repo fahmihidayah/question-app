@@ -60,7 +60,7 @@ export function AutoConferenceActions({ conference }: AutoConferenceActionsProps
   }
 
   const handleShare = async () => {
-    const url = `${window.location.origin}/auto-conferences/${conference.slug}`
+    const url = `${window.location.origin}/${conference.slug}`
     
     if (navigator.share) {
       try {
@@ -79,12 +79,12 @@ export function AutoConferenceActions({ conference }: AutoConferenceActionsProps
   return (
     <>
       <ActionMenu>
-        <DropdownMenuItem asChild>
+        {/* <DropdownMenuItem asChild>
           <Link href={`/auto-conferences/${conference.slug}`}>
             <Eye className="mr-2 h-4 w-4" />
             View
           </Link>
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
         
         <DropdownMenuItem onClick={handleCopy}>
           <Copy className="mr-2 h-4 w-4" />
