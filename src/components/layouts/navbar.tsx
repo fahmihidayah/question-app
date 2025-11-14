@@ -52,12 +52,12 @@ export function Navbar() {
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <nav className="flex flex-col space-y-4 mt-6">
                 <Button variant="ghost" asChild className="justify-start">
-                  <Link href="/login" onClick={() => setOpen(false)}>
+                  <Link href="/sign-in" onClick={() => setOpen(false)}>
                     Login
                   </Link>
                 </Button>
                 <Button asChild className="justify-start">
-                  <Link href="/register" onClick={() => setOpen(false)}>
+                  <Link href="/sign-up" onClick={() => setOpen(false)}>
                     Register
                   </Link>
                 </Button>

@@ -240,29 +240,18 @@ const Navbar = ({ isAuthenticated = false, userName }: NavbarProps) => {
               </>
             ) : (
               <>
-                <Link
-                  href="/conferences"
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false)
-                  }}
-                >
-                  Jelajahi Konferensi
-                </Link>
 
-                <button
+                <Link
+                href={"/sign-in"}
                   className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200 touch-manipulation select-none"
-                  onClick={() => {
-                      router.push("/auth")
-                     setIsMobileMenuOpen(false)
-                  }}
+                 
                   onTouchStart={() => {}}
                   style={{ WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation' }}
                 >
                   Masuk
-                </button>
+                </Link>
 
-                <button
+                <Link href={"/sign-up"}
                   className="block px-3 py-2 rounded-md text-base font-medium bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors duration-200 mx-3 touch-manipulation select-none"
                   onClick={() => {
                       router.push("/sign-up")
@@ -272,7 +261,7 @@ const Navbar = ({ isAuthenticated = false, userName }: NavbarProps) => {
                   style={{ WebkitTapHighlightColor: 'transparent', touchAction: 'manipulation' }}
                 >
                   Daftar Gratis
-                </button>
+                </Link>
               </>
             )}
           </div>
