@@ -1,20 +1,19 @@
-'use client';
+'use client'
 
-import Link from 'next/link';
-import { MessageCircle, Users, Zap, ArrowRight, Play } from 'lucide-react';
-import Navbar from '../Navbar';
+import Link from 'next/link'
+import { MessageCircle, Users, Zap, ArrowRight, Play } from 'lucide-react'
+import Navbar from '../Navbar'
 
 interface LandingPageProps {
-  isAuthenticated?: boolean;
-  userName?: string;
+  isAuthenticated?: boolean
+  userName?: string
 }
 
 const LandingPage = ({ isAuthenticated = false, userName }: LandingPageProps) => {
   return (
-
     <>
       <Navbar isAuthenticated={isAuthenticated} userName={userName} />
-      
+
       {/* Hero Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 bg-white dark:bg-gray-900">
         <div className="text-center">
@@ -28,26 +27,19 @@ const LandingPage = ({ isAuthenticated = false, userName }: LandingPageProps) =>
             <span className="text-blue-600 dark:text-blue-400"> Konferensi</span>
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed">
-            Ajukan pertanyaan kepada pembicara dengan mudah. Buat konferensi interaktif
-            yang memungkinkan audiens berpartisipasi aktif dalam diskusi.
+            Ajukan pertanyaan kepada pembicara dengan mudah. Buat konferensi interaktif yang
+            memungkinkan audiens berpartisipasi aktif dalam diskusi.
           </p>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
             {!isAuthenticated ? (
               <>
                 <Link
-                  href="/auth"
+                  href="/sign-in"
                   className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 flex items-center gap-2 shadow-lg"
                 >
                   Mulai Sekarang
                   <ArrowRight className="w-5 h-5" />
-                </Link>
-                <Link
-                  href="/conferences"
-                  className="border-2 border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 flex items-center gap-2"
-                >
-                  <Play className="w-5 h-5" />
-                  Lihat Demo
                 </Link>
               </>
             ) : (
@@ -104,7 +96,9 @@ const LandingPage = ({ isAuthenticated = false, userName }: LandingPageProps) =>
               <div className="bg-blue-100 dark:bg-blue-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                 <MessageCircle className="w-8 h-8 text-blue-600 dark:text-blue-400" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Mudah Digunakan</h3>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                Mudah Digunakan
+              </h3>
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                 Interface yang intuitif memungkinkan siapa saja dapat dengan mudah mengajukan
                 pertanyaan tanpa registrasi yang rumit.
@@ -115,10 +109,12 @@ const LandingPage = ({ isAuthenticated = false, userName }: LandingPageProps) =>
               <div className="bg-green-100 dark:bg-green-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Users className="w-8 h-8 text-green-600 dark:text-green-400" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Partisipasi Tinggi</h3>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                Partisipasi Tinggi
+              </h3>
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                Tingkatkan engagement audiens dengan sistem tanya jawab yang interaktif
-                dan real-time untuk setiap konferensi.
+                Tingkatkan engagement audiens dengan sistem tanya jawab yang interaktif dan
+                real-time untuk setiap konferensi.
               </p>
             </div>
 
@@ -126,10 +122,12 @@ const LandingPage = ({ isAuthenticated = false, userName }: LandingPageProps) =>
               <div className="bg-purple-100 dark:bg-purple-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Zap className="w-8 h-8 text-purple-600 dark:text-purple-400" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Setup Cepat</h3>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                Setup Cepat
+              </h3>
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                Buat konferensi baru hanya dalam hitungan menit. Bagikan link dan
-                mulai terima pertanyaan dari audiens Anda.
+                Buat konferensi baru hanya dalam hitungan menit. Bagikan link dan mulai terima
+                pertanyaan dari audiens Anda.
               </p>
             </div>
           </div>
@@ -153,7 +151,9 @@ const LandingPage = ({ isAuthenticated = false, userName }: LandingPageProps) =>
               <div className="bg-blue-600 dark:bg-blue-500 text-white w-12 h-12 rounded-full flex items-center justify-center mb-6 font-bold text-xl">
                 1
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Buat Konferensi</h3>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                Buat Konferensi
+              </h3>
               <p className="text-gray-600 dark:text-gray-300">
                 Daftar dan buat konferensi baru dengan judul dan deskripsi yang menarik.
               </p>
@@ -163,7 +163,9 @@ const LandingPage = ({ isAuthenticated = false, userName }: LandingPageProps) =>
               <div className="bg-green-600 dark:bg-green-500 text-white w-12 h-12 rounded-full flex items-center justify-center mb-6 font-bold text-xl">
                 2
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Bagikan Link</h3>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                Bagikan Link
+              </h3>
               <p className="text-gray-600 dark:text-gray-300">
                 Bagikan link konferensi kepada audiens melalui media sosial atau platform lain.
               </p>
@@ -173,7 +175,9 @@ const LandingPage = ({ isAuthenticated = false, userName }: LandingPageProps) =>
               <div className="bg-purple-600 dark:bg-purple-500 text-white w-12 h-12 rounded-full flex items-center justify-center mb-6 font-bold text-xl">
                 3
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Terima Pertanyaan</h3>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                Terima Pertanyaan
+              </h3>
               <p className="text-gray-600 dark:text-gray-300">
                 Audiens dapat langsung mengajukan pertanyaan yang akan ditampilkan secara real-time.
               </p>
@@ -189,16 +193,16 @@ const LandingPage = ({ isAuthenticated = false, userName }: LandingPageProps) =>
             Siap Meningkatkan Konferensi Anda?
           </h2>
           <p className="text-xl text-blue-100 dark:text-blue-200 mb-8 leading-relaxed">
-            Bergabunglah dengan ratusan penyelenggara konferensi yang sudah merasakan
-            manfaat platform interaktif kami.
+            Bergabunglah dengan ratusan penyelenggara konferensi yang sudah merasakan manfaat
+            platform interaktif kami.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href={isAuthenticated ? "/conferences/create" : "/auth"}
+              href={isAuthenticated ? '/conferences/create' : '/auth'}
               className="bg-white dark:bg-gray-100 text-blue-600 dark:text-blue-700 hover:bg-gray-100 dark:hover:bg-gray-200 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 flex items-center justify-center gap-2 shadow-lg"
             >
-              {isAuthenticated ? "Buat Konferensi Sekarang" : "Mulai Gratis"}
+              {isAuthenticated ? 'Buat Konferensi Sekarang' : 'Mulai Gratis'}
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
@@ -215,26 +219,50 @@ const LandingPage = ({ isAuthenticated = false, userName }: LandingPageProps) =>
                 <span className="ml-2 text-xl font-bold">KonfQ</span>
               </div>
               <p className="text-gray-400 dark:text-gray-500 leading-relaxed max-w-md">
-                Platform tanya jawab konferensi yang memungkinkan interaksi real-time
-                antara pembicara dan audiens untuk pengalaman yang lebih engaging.
+                Platform tanya jawab konferensi yang memungkinkan interaksi real-time antara
+                pembicara dan audiens untuk pengalaman yang lebih engaging.
               </p>
             </div>
 
             <div>
               <h4 className="text-lg font-semibold mb-4">Platform</h4>
               <ul className="space-y-2 text-gray-400 dark:text-gray-500">
-                <li><Link href="/conferences" className="hover:text-white transition-colors">Konferensi</Link></li>
-                <li><Link href="/auth" className="hover:text-white transition-colors">Masuk</Link></li>
-                <li><Link href="/sign-up" className="hover:text-white transition-colors">Daftar</Link></li>
+                <li>
+                  <Link href="/conferences" className="hover:text-white transition-colors">
+                    Konferensi
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/auth" className="hover:text-white transition-colors">
+                    Masuk
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/sign-up" className="hover:text-white transition-colors">
+                    Daftar
+                  </Link>
+                </li>
               </ul>
             </div>
 
             <div>
               <h4 className="text-lg font-semibold mb-4">Dukungan</h4>
               <ul className="space-y-2 text-gray-400 dark:text-gray-500">
-                <li><a href="#" className="hover:text-white transition-colors">Bantuan</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Kontak</a></li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Bantuan
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    FAQ
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Kontak
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
@@ -245,7 +273,7 @@ const LandingPage = ({ isAuthenticated = false, userName }: LandingPageProps) =>
         </div>
       </footer>
     </>
-  );
-};
+  )
+}
 
-export default LandingPage;
+export default LandingPage
