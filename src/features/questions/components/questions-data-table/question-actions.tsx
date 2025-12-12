@@ -3,7 +3,7 @@
 import { Conference, Question } from "@/payload-types"
 import { ActionMenu } from "@/components/ui/data-table"
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu"
-import { Edit, Trash2, Eye, Copy, CheckCircle, Clock } from "lucide-react"
+import { Edit, Trash2, Eye, Copy, CheckCircle, Clock, FileText } from "lucide-react"
 import { useState } from "react"
 import { deleteQuestion, updateQuestionStatus } from "../../actions"
 import { useRouter } from "next/navigation"
@@ -18,6 +18,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 
 interface QuestionActionsProps {
   question: Question,
@@ -29,6 +36,7 @@ export function QuestionActions({ question, isTableQuestion }: QuestionActionsPr
   const [isUpdatingStatus, setIsUpdatingStatus] = useState(false)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [showStatusDialog, setShowStatusDialog] = useState(false)
+  const [showDetailsDialog, setShowDetailsDialog] = useState(false)
   const [pendingStatus, setPendingStatus] = useState<boolean | null>(null)
   const router = useRouter()
   const queryClient = useQueryClient()
@@ -107,6 +115,10 @@ export function QuestionActions({ question, isTableQuestion }: QuestionActionsPr
   return (
     <>
       <ActionMenu>
+        <DropdownMenuItem onClick={() => setShowDetailsDialog(true)}>
+          <FileText className="mr-2 h-4 w-4" />
+          View Details
+        </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <a href={getConferenceUrl()}>
             <Eye className="mr-2 h-4 w-4" />
@@ -200,6 +212,72 @@ export function QuestionActions({ question, isTableQuestion }: QuestionActionsPr
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Question Details Dialog */}
+      <Dialog open={showDetailsDialog} onOpenChange={setShowDetailsDialog}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Question Details</DialogTitle>
+            <DialogDescription>
+              Complete information about this question
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <h3 className="font-semibold text-sm text-muted-foreground mb-1">Question</h3>
+              <p className="text-base">{question.question}</p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-sm text-muted-foreground mb-1">Name</h3>
+              <p className="text-base">{question.name || "Anonymous"}</p>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-sm text-muted-foreground mb-1">Conference</h3>
+              {question.conference && typeof question.conference === 'object' ? (
+                <a
+                  href={`/conferences/${question.conference.slug}`}
+                  className="text-blue-600 hover:underline"
+                >
+                  {question.conference.title}
+                </a>
+              ) : (
+                <p className="text-muted-foreground">No conference</p>
+              )}
+            </div>
+
+            {!isTableQuestion && (
+              <div>
+                <h3 className="font-semibold text-sm text-muted-foreground mb-1">Status</h3>
+                <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                  question.accept
+                    ? "bg-green-100 text-green-800"
+                    : "bg-orange-100 text-orange-800"
+                }`}>
+                  {question.accept ? "Published" : "Pending"}
+                </span>
+              </div>
+            )}
+
+            <div>
+              <h3 className="font-semibold text-sm text-muted-foreground mb-1">Created At</h3>
+              <p className="text-base">
+                {new Date(question.createdAt).toLocaleString()}
+              </p>
+            </div>
+
+            {question.updatedAt && (
+              <div>
+                <h3 className="font-semibold text-sm text-muted-foreground mb-1">Last Updated</h3>
+                <p className="text-base">
+                  {new Date(question.updatedAt).toLocaleString()}
+                </p>
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }

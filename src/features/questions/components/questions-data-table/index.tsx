@@ -1,13 +1,19 @@
-"use client"
+'use client'
 
-import { DataTable } from "@/components/ui/data-table"
-import { useQuery } from "@tanstack/react-query"
-import { getQuestions } from "../../actions"
-import { columns } from "./columns"
-import { useState } from "react"
-import { useDebounce } from "@/hooks/use-debounce"
+import { DataTable } from '@/components/ui/data-table'
+import { useQuery } from '@tanstack/react-query'
+import { getQuestions } from '../../actions'
+import { columns } from './columns'
+import { useState } from 'react'
+import { useDebounce } from '@/hooks/use-debounce'
 
-export function QuestionsDataTable({conferenceId, isTableQuestion} : {conferenceId? : string, isTableQuestion : boolean}) {
+export function QuestionsDataTable({
+  conferenceId,
+  isTableQuestion,
+}: {
+  conferenceId?: string
+  isTableQuestion: boolean
+}) {
   const [keyword, setKeyword] = useState('')
   const [page, setPage] = useState(1)
   const debouncedKeyword = useDebounce(keyword, 300)
@@ -15,14 +21,14 @@ export function QuestionsDataTable({conferenceId, isTableQuestion} : {conference
   const {
     data: questionsData,
     isLoading,
-    error
+    error,
   } = useQuery({
-    queryKey: ['questions', debouncedKeyword, page],
+    queryKey: ['questions', debouncedKeyword, page, conferenceId],
     queryFn: async () => {
       return await getQuestions({
         keyword: debouncedKeyword,
         page,
-        conferenceId
+        conferenceId,
       })
     },
   })
@@ -35,7 +41,7 @@ export function QuestionsDataTable({conferenceId, isTableQuestion} : {conference
   return (
     <DataTable
       columns={columns({
-        isTableQuestion
+        isTableQuestion,
       })}
       data={questions}
       searchKey="question"
