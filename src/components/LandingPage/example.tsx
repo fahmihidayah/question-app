@@ -3,7 +3,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import LandingPage from './index';
 import { getMeUser } from '@/utilities/getMeUser';
 
@@ -13,8 +13,9 @@ const LandingPageWithAuth = () => {
   const [userName, setUserName] = useState<string | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  
+
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   useEffect(() => {
     // Check for error messages from middleware
@@ -38,6 +39,14 @@ const LandingPageWithAuth = () => {
         if (user && user.user) {
           setIsAuthenticated(true);
           setUserName(user.user.name || user.user.email);
+
+          // Check if there's a redirect URL stored from OAuth flow
+          const oauthRedirect = sessionStorage.getItem('oauth_redirect');
+          if (oauthRedirect) {
+            sessionStorage.removeItem('oauth_redirect');
+            router.push(oauthRedirect);
+            return;
+          }
         }
       } catch (error) {
         console.log('User not authenticated');
@@ -47,7 +56,7 @@ const LandingPageWithAuth = () => {
     };
 
     checkAuthStatus();
-  }, [searchParams]);
+  }, [searchParams, router]);
 
   // No need for handleLogout - the Navbar handles it internally
 
