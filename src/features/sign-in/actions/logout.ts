@@ -12,7 +12,7 @@ export const logoutAction = async () => {
     // Clear any additional cookies if needed
     const cookieStore = await cookies()
     cookieStore.delete('payload-token')
-    revalidateTag('/', 'max')
+    revalidateTag('/')
     return { success: true }
   } catch (error) {
     console.error('Logout error:', error)

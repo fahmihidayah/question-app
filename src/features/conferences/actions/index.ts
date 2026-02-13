@@ -220,7 +220,7 @@ export const createConferenceAction = async (conferenceForm: ConferenceFormSchem
       },
     })
 
-    revalidateTag('/dashboard/conferences', 'max')
+    revalidateTag('/dashboard/conferences')
 
     return conference
   }

@@ -16,13 +16,14 @@ export const signInAction = async (signInForm: SignInFormSchema) => {
       password: signInForm.password,
     },
   })
+  console.log('login test : ', token)
 
   const cookiesNext = await cookies()
 
   if (token.token) {
     cookiesNext.set('payload-token', token.token)
   }
-  revalidateTag('/', 'max')
+  revalidateTag('/')
 
   return token
 }

@@ -5,7 +5,7 @@ import { cookies } from 'next/headers'
 // import { getMeUserServer } from './utilities/getMeUserServer';
 import { getMeUser } from './utilities/getMeUser'
 
-export async function proxy(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   const cookiesReq = await cookies()
   // Check if the request is for dashboard routes
