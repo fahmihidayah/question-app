@@ -3,15 +3,14 @@ import type { NextRequest } from 'next/server'
 // import { getMeUser, getMeUserServer, getUserFromToken } from './utilities/getMeUser'
 import { cookies } from 'next/headers'
 // import { getMeUserServer } from './utilities/getMeUserServer';
-import { getMeUser } from './utilities/getMeUser';
+import { getMeUser } from './utilities/getMeUser'
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
-  const cookiesReq = await cookies();
+  const cookiesReq = await cookies()
   // Check if the request is for dashboard routes
   if (pathname.startsWith('/dashboard')) {
-
-  const token = cookiesReq.get('payload-token')?.value
+    const token = cookiesReq.get('payload-token')?.value
     // If no token, redirect to sign-in page
     if (!token) {
       const signInUrl = new URL('/sign-in', request.url)
