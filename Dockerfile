@@ -2,7 +2,7 @@
 # This Dockerfile creates an optimized production build
 
 # Stage 1: Base image with Node.js
-FROM node:22.12.0-alpine AS base
+FROM node:22.13.0-alpine AS base
 
 # Install dependencies needed for native modules and sharp
 RUN apk add --no-cache \
