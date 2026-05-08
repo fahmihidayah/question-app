@@ -12,7 +12,7 @@ RUN apk add --no-cache \
     && rm -rf /var/cache/apk/*
 
 # Install pnpm directly (bypass corepack signature issues)
-RUN npm install -g pnpm@latest
+RUN npm install -g pnpm@11
 
 # Set working directory
 WORKDIR /app
